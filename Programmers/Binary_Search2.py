@@ -1,3 +1,5 @@
+# 이분탐색 - 징검다리
+
 def solution(distance, rocks, n):
     answer = 0
     rocks.append(distance)
@@ -5,7 +7,7 @@ def solution(distance, rocks, n):
 
     left = 0
     right = distance
-    
+
     # 아래의 루프를 실행하여 삭제한 바위의 개수가 n개 이면 정답
     # 루프 처음엔 중앙까지의 거리를 기준값으로 지정하여
     # 삭제한 바위의 개수가 n개 이상이면 그 값을 증가
