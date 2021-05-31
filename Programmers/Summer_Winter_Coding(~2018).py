@@ -1,16 +1,21 @@
 # Summer/Winter Coding(~2018) - 소수 만들기
 
+from itertools import combinations
+import math
+
+
+def is_prime_number(n):
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return 0
+    return 1
+
+
 def solution(nums):
-    array = []
-    nums_len = len(nums)
-    for a in range(nums_len):
-        for b in range(a+1, nums_len):
-            for c in range(b+1, nums_len):
-                array.append(nums[a] + nums[b] + nums[c])
+    answer = 0
+    for i in combinations(nums, 3):
+        answer += is_prime_number(sum(i))
 
-    print(array)
-
-    answer = -1
     return answer
 
 
