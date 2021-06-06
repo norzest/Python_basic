@@ -1,7 +1,5 @@
 # 2019 KAKAO BLIND RECRUITMENT - 실패율
 
-import collections
-
 
 def solution(n, stages):
     # 실패율을 저장할 딕셔너리
