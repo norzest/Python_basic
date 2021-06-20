@@ -7,7 +7,10 @@ def solution(dartResult):
 
     for result in dartResult:
         if result.isdigit():
-            stacks.append(int(result))
+            if result == '0' and stacks is not None:
+                stacks[-1] = stacks[-1] * 10
+            else:
+                stacks.append(int(result))
         if result in alpha:
             stacks[-1] *= alpha.index(result) + 1
 
