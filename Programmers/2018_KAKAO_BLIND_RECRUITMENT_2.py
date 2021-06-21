@@ -30,4 +30,3 @@ if __name__ == "__main__":
     print('-------------')
     print(solution("1D*2S3T"))
     print('-------------')
-
