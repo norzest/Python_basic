@@ -1,0 +1,25 @@
+# 2020 KAKAO BLIND RECRUITMENT - 문자열 압축
+
+def solution(s):
+    answer = 0
+    arr = []
+
+    s_len = len(s)
+    for i in range(1, int(s_len/2) + 1):
+        temp = [s[j:j+i] for j in range(0, int(s_len), i)]
+        print(temp)
+        print('--')
+
+    return answer
+
+
+if __name__ == "__main__":
+    print(solution("aabbaccc"))
+    print('-------------')
+    print(solution("ababcdcdababcdcd"))
+    print('-------------')
+    print(solution("abcabcdede"))
+    print('-------------')
+    print(solution("a"))
+    print('-------------')
+
