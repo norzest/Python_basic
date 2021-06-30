@@ -2,11 +2,16 @@
 
 def solution(s):
     answer = 0
-    arr = []
-
     s_len = len(s)
     for i in range(1, int(s_len/2) + 1):
         temp = [s[j:j+i] for j in range(0, int(s_len), i)]
+        print(temp)
+        for j in range(len(temp) - 1):
+            if temp[j] == temp[j+1]:
+                try:
+                    temp[j] = '2'
+                except:
+                    temp[j] = '2'
         print(temp)
         print('--')
 
