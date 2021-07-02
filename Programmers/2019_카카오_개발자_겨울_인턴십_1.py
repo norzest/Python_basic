@@ -8,7 +8,7 @@ def solution(s):
     arr = [re.sub('{|}', '', i).split(',')
            for i in s.split('},{')]
     # 효율적인 탐색을 위한 이차원 배열의 길이를 기준으로 정렬
-    arr.sort(key=lambda x: len(x))
+    arr.sort(key= len)
     
     answer = []
     for i in arr:
