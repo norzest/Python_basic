@@ -1,4 +1,4 @@
-a = 3
-b = 4
-a, b = b, a
-print(a, b)
+test = [1, 2, 3]
+
+test.pop()
+print(test)
