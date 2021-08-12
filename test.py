@@ -3,10 +3,16 @@
 
 def solution(relation):
     answer = 0
-    relation_len = len(relation[0])
-    attr = [[r[i] for r in relation] for i in range(relation_len)]
-
-    print(attr)
+    attr = [[r[i] for r in relation] for i in range(len(relation[0]))]
+    len_attr = len(attr)
+    for i in range(len_attr):
+        if len(set(attr[i])) == len(relation):
+            answer += 1
+        else:
+            temp = [attr[_] for _ in range(i, len_attr)]
+            for j in temp:
+                print(j)
+        print('--')
     return answer
 
 
