@@ -11,21 +11,19 @@ def solution(info, query):
         d = "".join(re.findall('\d+', qry))
         # 점수와 띄어쓰기 제거 후 and 로 스플릿
         qry = qry.replace(d, "").replace(" ", "").split("and")
+        # - 조건이 없다는 뜻이므로 삭제
+
         # 다시 점수 추가
         qry.append(d)
-
+        print('------')
+        print(qry)
+        
         num = 0
+        
         for i in info:
             i = i.split(" ")
             
-            # 점수를 제외한 각 컬럼별로 비교
-            for j in range(len(qry) - 1):
-                if qry[j] != "-" and i[j] != qry[j]:
-                    break
-            # 마지막으로 점수 비교
-            else:
-                if int(i[-1]) >= int(qry[-1]):
-                    num += 1
+            print(i)
 
         answer.append(num)
         
