@@ -1,31 +1,32 @@
 # 2021 KAKAO BLIND RECRUITMENT - 순위 검색
 
-import re
+import bisect
+
+
+changes = []
+temp = []
+
+
+def make_cases():
+    global changes, temp
+    if len(temp) == 4:
+        t = []
+        for index in temp:
+            t.append(index)
+        changes.append(t)
+        return
+
+    for i in (False, True):
+        temp.append(i)
+        make_cases()
+        temp.pop()
 
 
 def solution(info, query):
     answer = []
-
-    for qry in query:
-        # 점수만 추출
-        d = "".join(re.findall('\d+', qry))
-        # 점수와 띄어쓰기 제거 후 and 로 스플릿
-        qry = qry.replace(d, "").replace(" ", "").split("and")
-        # - 조건이 없다는 뜻이므로 삭제
-
-        # 다시 점수 추가
-        qry.append(d)
-        print('------')
-        print(qry)
-        
-        num = 0
-        
-        for i in info:
-            i = i.split(" ")
-            
-            print(i)
-
-        answer.append(num)
+    make_cases()
+    print(changes)
+    print(temp)
         
     return answer
 
