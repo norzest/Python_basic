@@ -1,57 +1,35 @@
-# 2021 KAKAO BLIND RECRUITMENT - 순위 검색
+# Summer/Winter Coding(~2018) - 배달
 
-from itertools import combinations
+from math import inf
 
 
-def solution(info, query):
-    answer = []
-    # 지원자를 검색 조건별로 나누어 저장할 딕셔너리
-    applicant = {}
+def solution(N, road, K):
+    answer = 0
 
-    for i in info:
-        s = i.split()
-        # 지원자 딕셔너리의 값을 점수, 나머지를 키로 지정
-        key, value = s[:-1], int(s[-1])
+    # 각 마을에서 마을로 갈 때 걸리는 시간
+    arr = [[inf] * N for _ in range(N)]
+    for r in road:
+        temp = min(arr[r[0]-1][r[1]-1], r[2])
+        arr[r[0]-1][r[1]-1] = temp
+        arr[r[1]-1][r[0]-1] = temp
 
-        for j in range(5):
-            # 지원자의 정보를 토대로 나올 수 있는 모든 조건
-            # ex) java, backend, junior, pizza 4개로 나올수 있는 모든 조합
-            for k in combinations(key, j):
-                temp = "".join(k)
-                if temp in applicant:
-                    applicant[temp].append(value)
-                else:
-                    applicant[temp] = [value]
-    
-    # 각 키의 값들을 정렬
-    for key in applicant.keys():
-        applicant[key].sort()
+    # 플로이드 알고리즘
+    # 경유지
+    for i in range(N):
+        arr[i][i] = 0
+        # 출발지
+        for j in range(N):
+            # 목적지
+            for k in range(N):
+                arr[j][k] = min(arr[j][k], arr[j][i] + arr[i][k])
 
-    for qry in query:
-        q = qry.split(" ")
-        # 조건의 점수는 value 나머지는 key
-        q_key = "".join([_ for _ in q[:-1] if _ != 'and' and _ != '-'])
-        q_value = int(q[-1])
+    for a in arr[0]:
+        if a <= K:
+            answer += 1
 
-        # 점수를 제외한 조건을 만족하는 key 가 applicant 에 있다면
-        if q_key in applicant:
-            value = applicant[q_key]
-            len_value = len(value)
-
-            # 조건을 만족하는 key 의 value 가 점수 조건도 만족하는지 이분탐색
-            left, right = 0, len_value
-            while left < right:
-                mid = (left + right) // 2
-                if value[mid] >= q_value:
-                    right = mid
-                else:
-                    left = mid + 1
-
-            answer.append(len_value - left)
-        else:
-            answer.append(0)
     return answer
 
 
 if __name__ == "__main__":
-    print(solution(["java backend junior pizza 150", "python frontend senior chicken 210", "python frontend senior chicken 150", "cpp backend senior pizza 260", "java backend junior chicken 80", "python backend senior chicken 50"], ["java and backend and junior and pizza 100", "python and frontend and senior and chicken 200", "cpp and - and senior and pizza 250", "- and backend and senior and - 150", "- and - and - and chicken 100", "- and - and - and - 150"]))
+    print(solution(5, [[1, 2, 1], [2, 3, 3], [5, 2, 2], [1, 4, 2], [5, 3, 1], [5, 4, 2]], 3))
+    print(solution(6, [[1, 2, 1], [1, 3, 2], [2, 3, 2], [3, 4, 3], [3, 5, 2], [3, 5, 3], [5, 6, 1]], 4))
