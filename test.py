@@ -1,55 +1,31 @@
-# 월간 코드 챌린지 시즌 1 - 삼각 달팽이
+# Summer/Winter Coding(~2018) - 영어 끝말잇기
 
-def solution(n):
-    # 삼각형 배열 생성
-    arr = [[0] * i for i in range(1, n + 1)]
-    # 현재 위치
-    di, dj = 0, 0
-    # 해당 위치에 입력할 숫자
-    num = 1
-    # while 문 break controller
-    breaker = True
-    while breaker:
-        # 아래로
-        while di < n and arr[di][dj] == 0:
-            arr[di][dj] = num
-            num += 1
-            di += 1
+from math import ceil
 
-        # 오른쪽으로
-        di -= 1
-        dj += 1
-        while dj < n and arr[di][dj] == 0:
-            arr[di][dj] = num
-            num += 1
-            dj += 1
 
-        # 위로
-        dj -= 2
-        di -= 1
-        while di >= 0 and arr[di][dj] == 0:
-            arr[di][dj] = num
-            num += 1
-            di -= 1
-            dj -= 1
+def solution(n, words):
+    answer = [0, 0]
+    # 차례
+    turn = 1
+    # 현재 사용한 단어를 담을 리스트
+    stacks = []
+    # 현재 단어 이전에 사용했던 단어의 마지막 알파벳
+    pre_word = words[0][0]
 
-        # 다음 시작할 위치 지정
-        di += 2
-        dj += 1
-        try:
-            # 다음 시작 위치가 0이 아니면 끝
-            if arr[di][dj] != 0:
-                breaker = False
-        except IndexError:
-            breaker = False
+    for word in words:
+        # 만약 word 가 이미 사용한 단어이거나 이전 단어와 이어지지 않는다면
+        if word in stacks or pre_word != word[0]:
+            answer = [turn % n if turn % n != 0 else n, ceil(turn / n)]
+            break
 
-    return sum(arr, [])
+        pre_word = word[-1]
+        stacks.append(word)
+        turn += 1
+
+    return answer
 
 
 if __name__ == "__main__":
-    print(solution(1))
-    print(solution(2))
-    print(solution(3))
-    print(solution(4))
-    print(solution(5))
-    print(solution(6))
+    print(solution(3, ["tank", "kick", "know", "wheel", "land", "dream", "mother", "robot", "tank"]))
+    print(solution(5, ["hello", "observe", "effect", "take", "either", "recognize", "encourage", "ensure", "establish", "hang", "gather", "refer", "reference", "estimate", "executive"]))
+    print(solution(2, ["hello", "one", "even", "never", "now", "world", "draw"]))
