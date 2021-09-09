@@ -1,31 +1,38 @@
-# Summer/Winter Coding(~2018) - 영어 끝말잇기
+# 2018 KAKAO BLIND RECRUITMENT - 캐시
 
-from math import ceil
+def solution(cacheSize, cities):
+    # 캐시 사이즈가 0일 경우
+    if cacheSize == 0:
+        return len(cities) * 5
+    
+    # 대소문자 구분 x이니 전부 소문자 화
+    cities = [c.lower() for c in cities]
+    # 첫 번째는 무조건 cache miss 이니 미리 계산
+    answer = 5
+    cache = [cities[0]]
 
-
-def solution(n, words):
-    answer = [0, 0]
-    # 차례
-    turn = 1
-    # 현재 사용한 단어를 담을 리스트
-    stacks = []
-    # 현재 단어 이전에 사용했던 단어의 마지막 알파벳
-    pre_word = words[0][0]
-
-    for word in words:
-        # 만약 word 가 이미 사용한 단어이거나 이전 단어와 이어지지 않는다면
-        if word in stacks or pre_word != word[0]:
-            answer = [turn % n if turn % n != 0 else n, ceil(turn / n)]
-            break
-
-        pre_word = word[-1]
-        stacks.append(word)
-        turn += 1
+    for city in cities[1:]:
+        # cache hit
+        if city in cache:
+            answer += 1
+            cache.pop(cache.index(city))
+            cache.append(city)
+        # cache miss
+        else:
+            answer += 5
+            if len(cache) < cacheSize:
+                cache.append(city)
+            else:
+                cache.pop(0)
+                cache.append(city)
 
     return answer
 
 
 if __name__ == "__main__":
-    print(solution(3, ["tank", "kick", "know", "wheel", "land", "dream", "mother", "robot", "tank"]))
-    print(solution(5, ["hello", "observe", "effect", "take", "either", "recognize", "encourage", "ensure", "establish", "hang", "gather", "refer", "reference", "estimate", "executive"]))
-    print(solution(2, ["hello", "one", "even", "never", "now", "world", "draw"]))
+    print(solution(	3, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Jeju", "Pangyo", "Seoul", "NewYork", "LA"]))
+    print(solution(3, ["Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul"]))
+    print(solution(2, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"]))
+    print(solution(5, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"]))
+    print(solution(2, ["Jeju", "Pangyo", "NewYork", "newyork"]))
+    print(solution(0, ["Jeju", "Pangyo", "Seoul", "NewYork", "LA"]))
