@@ -1,4 +1,1 @@
-a = []
-
-if not a:
-    print('test')
+print(bin(3))
