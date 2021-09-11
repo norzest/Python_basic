@@ -1,20 +1,21 @@
-# 월간 코드 챌린지 시즌 1 - 이진 변환 반복하기
+# Summer/Winter Coding(~2018) - 점프와 순간 이동
 
-def solution(s):
-    answer = [0, 0]
+def solution(n):
+    ans = 0
 
-    while s != "1":
-        answer[0] += 1
-        answer[1] += s.count("0")
+    while n > 1:
 
-        s = s.replace("0", "")
-        s_len = len(s)
-        s = format(s_len, 'b')
+        if n % 2 == 1:
+            ans += 1
+            n -= 1
 
-    return answer
+        while n % 2 != 1:
+            n = n // 2
+
+    return ans + 1 if n == 1 else ans
 
 
 if __name__ == "__main__":
-    print(solution("110010101001"))
-    print(solution("01110"))
-    print(solution("1111111"))
+    print(solution(5))
+    print(solution(6))
+    print(solution(5000))
