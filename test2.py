@@ -1,4 +1,4 @@
-n = 3
-n /= 2
+def asdf():
+    return
 
-print(n)
+print(asdf())
