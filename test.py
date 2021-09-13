@@ -1,29 +1,34 @@
-# 월간 코드 챌린지 시즌 1 - 쿼드압축 후 개수 세기
+# 위클리 챌린지 7주차 - 입실 퇴실
 
 
-def solution(arr):
-    def quadtree(x, y, n):
-        # 해당 사각형의 가장 처음 수
-        num = arr[x][y]
-        for i in range(x, x + n):
-            for j in range(y, y + n):
-                # 그 수와 하나라도 같지 않으면 압축 불가
-                if arr[i][j] != num:
-                    half = n//2
-                    quadtree(x, y, half)
-                    quadtree(x, y + half, half)
-                    quadtree(x + half, y, half)
-                    quadtree(x + half, y + half, half)
-                    return
-        # 전부 같으므로 그 부분은 더이상 압축하지않고 카운트
-        else:
-            answer[num] += 1
+def solution(enter, leave):
+    n = len(enter)
+    answer = [0] * n
+    enter_, leave_ = {}, {}
 
-    answer = [0, 0]
-    quadtree(0, 0, len(arr))
+    for i in range(1, n + 1):
+        enter_[i] = enter[enter.index(i) + 1:]
+        leave_[i] = leave[:leave.index(i)]
+
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if j in enter_[i] and j in leave_[i]:
+                answer[j - 1] += 1
+                answer[i - 1] += 1
+
+                temp = enter[enter.index(i) + 1:enter.index(j)]
+                if temp:
+                    for t in temp:
+                        if not (t in enter_[i] and t in leave_[i]):
+                            answer[i - 1] += 1
+                            answer[t - 1] += 1
+
     return answer
 
 
 if __name__ == "__main__":
-    print(solution([[1, 1, 0, 0], [1, 0, 0, 0], [1, 0, 0, 1], [1, 1, 1, 1]]))
-    print(solution([[1, 1, 1, 1, 1, 1, 1, 1], [0, 1, 1, 1, 1, 1, 1, 1], [0, 0, 0, 0, 1, 1, 1, 1], [0, 1, 0, 0, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 1, 1], [0, 0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 1, 0, 0, 1], [0, 0, 0, 0, 1, 1, 1, 1]]))
+    print(solution([1, 3, 2], [1, 2, 3]))
+    print(solution([1, 4, 2, 3], [2, 1, 3, 4]))
+    print(solution([3, 2, 1], [2, 1, 3]))
+    print(solution([3, 2, 1], [1, 3, 2]))
+    print(solution([1, 4, 2, 3], [2, 1, 4, 3]))
