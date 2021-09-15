@@ -3,25 +3,32 @@
 
 def solution(enter, leave):
     n = len(enter)
+    # ex) 3명일 경우 각 1번 2번 3번이 마주친 사람을 저장
     answer = [0] * n
-    enter_, leave_ = {}, {}
+    # 현재 입실하거나 퇴실할 사람을 나타내는 변수
+    enter_idx, leave_idx = 0, 0
+    # 현재 방에 있는 사람
+    room = set()
 
-    for i in range(1, n + 1):
-        enter_[i] = enter[enter.index(i) + 1:]
-        leave_[i] = leave[:leave.index(i)]
-
-    for i in range(1, n + 1):
-        for j in range(1, n + 1):
-            if j in enter_[i] and j in leave_[i]:
-                answer[j - 1] += 1
+    # 최대한 입실하자마자 퇴실하는 경우를 가정
+    # 전부 퇴실할 때까지 반복
+    while leave_idx < n:
+        # 퇴실할 경우
+        if leave[leave_idx] in room:
+            # 퇴실한 인원 제거
+            room.remove(leave[leave_idx])
+            leave_idx += 1
+            continue
+        # 입실할 경우
+        if enter[enter_idx] not in room:
+            # 방에 있던 사람이 입실한 사람과 마주침
+            for i in room:
                 answer[i - 1] += 1
-
-                temp = enter[enter.index(i) + 1:enter.index(j)]
-                if temp:
-                    for t in temp:
-                        if not (t in enter_[i] and t in leave_[i]):
-                            answer[i - 1] += 1
-                            answer[t - 1] += 1
+            # 입실한 사람이 방에 있던 사람들과 마주침
+            answer[enter[enter_idx] - 1] = len(room)
+            # 입실한 인원 제거
+            room.add(enter[enter_idx])
+            enter_idx += 1
 
     return answer
 
