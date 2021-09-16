@@ -1,41 +1,63 @@
-# 위클리 챌린지 7주차 - 입실 퇴실
+# 월간 코드 챌린지 시즌 3 - 빛의 경로 사이클
 
 
-def solution(enter, leave):
-    n = len(enter)
-    # ex) 3명일 경우 각 1번 2번 3번이 마주친 사람을 저장
-    answer = [0] * n
-    # 현재 입실하거나 퇴실할 사람을 나타내는 변수
-    enter_idx, leave_idx = 0, 0
-    # 현재 방에 있는 사람
-    room = set()
+def solution(grid):
+    def pointer_check():
+        if pointer[0] < 0:
+            pointer[0] = x_len - 1
+        elif pointer[0] >= x_len:
+            pointer[0] = 0
+        if pointer[1] < 0:
+            pointer[1] = y_len - 1
+        elif pointer[1] >= y_len:
+            pointer[1] = 0
 
-    # 최대한 입실하자마자 퇴실하는 경우를 가정
-    # 전부 퇴실할 때까지 반복
-    while leave_idx < n:
-        # 퇴실할 경우
-        if leave[leave_idx] in room:
-            # 퇴실한 인원 제거
-            room.remove(leave[leave_idx])
-            leave_idx += 1
-            continue
-        # 입실할 경우
-        if enter[enter_idx] not in room:
-            # 방에 있던 사람이 입실한 사람과 마주침
-            for i in room:
-                answer[i - 1] += 1
-            # 입실한 사람이 방에 있던 사람들과 마주침
-            answer[enter[enter_idx] - 1] = len(room)
-            # 입실한 인원 제거
-            room.add(enter[enter_idx])
-            enter_idx += 1
+    def pointer_move():
+        pointer[0] += move[0]
+        pointer[1] += move[1]
 
+    def visit():
+        location = grid[pointer[1]][pointer[0]]
+        if location == 'L':
+            if move[0] == 0:
+                move[0], move[1] = move[1], move[0]
+            elif move[1] == 0:
+                move[0], move[1] = move[1], -move[0]
+        if location == 'R':
+            if move[0] == 0:
+                move[0], move[1] = move[1], -move[0]
+            elif move[1] == 0:
+                move[0], move[1] = move[1], move[0]
+
+        pointer_move()
+        pointer_check()
+
+    answer = []
+    grid = [list(g) for g in grid]
+    # 가로 길이
+    x_len = len(grid[0])
+    # 세로 길이
+    y_len = len(grid)
+    # 현재 위치
+    pointer = [0, 0]
+    # 처음 이동하는 방향 [상, 하, 좌, 우]
+    dx, dy = [0, 0, -1, 1], [-1, 1, 0, 0]
+    # 현재 이동하는 방향
+    move = [0, -1]
+
+    for k in range(4):
+        move = [dx[k], dy[k]]
+        n = 0
+        while n < 20:
+            print(grid[pointer[1]][pointer[0]], end=" ")
+            visit()
+            n += 1
+        pointer = [0, 0]
+        print('')
     return answer
 
 
 if __name__ == "__main__":
-    print(solution([1, 3, 2], [1, 2, 3]))
-    print(solution([1, 4, 2, 3], [2, 1, 3, 4]))
-    print(solution([3, 2, 1], [2, 1, 3]))
-    print(solution([3, 2, 1], [1, 3, 2]))
-    print(solution([1, 4, 2, 3], [2, 1, 4, 3]))
+    print(solution(["SL", "LR"]))
+    print(solution(["S"]))
+    print(solution(["R", "R"]))
