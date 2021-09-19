@@ -2,6 +2,7 @@
 
 
 def solution(grid):
+    # 가로 세로 길이 이상 벗어나면 반대편 가장 끝으로 이동
     def pointer_check():
         if pointer[0] < 0:
             pointer[0] = x_len - 1
@@ -12,11 +13,17 @@ def solution(grid):
         elif pointer[1] >= y_len:
             pointer[1] = 0
 
+    # 포인터 이동
     def pointer_move():
         pointer[0] += move[0]
         pointer[1] += move[1]
 
+    # 칸 방문
     def visit():
+        pointer_move()
+        pointer_check()
+        
+        # 이동 방향 재설정
         location = grid[pointer[1]][pointer[0]]
         if location == 'L':
             if move[0] == 0:
@@ -25,12 +32,9 @@ def solution(grid):
                 move[0], move[1] = move[1], -move[0]
         if location == 'R':
             if move[0] == 0:
-                move[0], move[1] = move[1], -move[0]
+                move[0], move[1] = -move[1], move[0]
             elif move[1] == 0:
                 move[0], move[1] = move[1], move[0]
-
-        pointer_move()
-        pointer_check()
 
     answer = []
     grid = [list(g) for g in grid]
@@ -47,13 +51,18 @@ def solution(grid):
 
     for k in range(4):
         move = [dx[k], dy[k]]
-        n = 0
+        # 사이클을 특정하기 위한 첫 위치와 방향
+        first = [pointer.copy(), move.copy()]
+
+        n = 1
         while n < 20:
-            print(grid[pointer[1]][pointer[0]], end=" ")
             visit()
+            if first == [pointer, move]:
+                answer.append(n)
+                break
             n += 1
         pointer = [0, 0]
-        print('')
+
     return answer
 
 
