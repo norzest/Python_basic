@@ -3,38 +3,38 @@
 
 def solution(dirs):
     answer = 0
-    n = 10
-    visited = dict()
-    pointer = [5, 5]
+    # 좌표 평면의 최대 x, y 값
+    n = 5
+    # 방문한 좌표를 저장할 집합
+    visited = set()
+    # 현재 xy 값
+    x, y = 0, 0
 
     for d in dirs:
-        temp = tuple(pointer.copy())
+        # 이동할 xy 값
+        nx, ny = x, y
+
         if d == "U":
-            pointer[0] -= 1
-            if pointer[0] < 0:
-                pointer[0] += 1
+            ny += 1
         elif d == "D":
-            pointer[0] += 1
-            if pointer[0] > n:
-                pointer[0] -= 1
+            ny -= 1
         elif d == "R":
-            pointer[1] += 1
-            if pointer[1] > n:
-                pointer[1] -= 1
+            nx += 1
         elif d == "L":
-            pointer[1] -= 1
-            if pointer[1] < 0:
-                pointer[1] += 1
+            nx -= 1
 
-        if temp in visited:
-            if pointer not in visited[temp]:
-                visited[temp].append(pointer.copy())
-        else:
-            if temp != tuple(pointer):
-                visited[temp] = [pointer.copy()]
+        # 좌표를 벗어났으면 다음 문장은 실행 x
+        if nx < -n or nx > n or ny < -n or ny > n:
+            continue
 
-    for v in visited.values():
-        answer += len(v)
+        # 어디서 어디로 이동했는지 집합에 추가
+        # 반대 방향도 같은 취급이므로 같이 추가
+        if (x, y, nx, ny) not in visited:
+            visited.add((x, y, nx, ny))
+            visited.add((nx, ny, x, y))
+            answer += 1
+
+        x, y = nx, ny
 
     return answer
 
@@ -42,3 +42,4 @@ def solution(dirs):
 if __name__ == "__main__":
     print(solution("ULURRDLLU"))
     print(solution("LULLLLLLU"))
+    print(solution("DU"))
