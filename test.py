@@ -1,26 +1,44 @@
-# Summer/Winter Coding(~2018) - 스킬트리
+# Summer/Winter Coding(~2018) - 방문 길이
 
 
-def solution(skill, skill_trees):
+def solution(dirs):
     answer = 0
+    n = 10
+    visited = dict()
+    pointer = [5, 5]
 
-    for skill_tree in skill_trees:
-        stack = []
+    for d in dirs:
+        temp = tuple(pointer.copy())
+        if d == "U":
+            pointer[0] -= 1
+            if pointer[0] < 0:
+                pointer[0] += 1
+        elif d == "D":
+            pointer[0] += 1
+            if pointer[0] > n:
+                pointer[0] -= 1
+        elif d == "R":
+            pointer[1] += 1
+            if pointer[1] > n:
+                pointer[1] -= 1
+        elif d == "L":
+            pointer[1] -= 1
+            if pointer[1] < 0:
+                pointer[1] += 1
 
-        for s in skill_tree:
-            # 선행스킬이 있는 경우 스택에 추가
-            if s in skill:
-                stack.append(s)
-
-        for i in range(len(stack)):
-            # 선행스킬 순서와 다르면 break
-            if stack[i] != skill[i]:
-                break
+        if temp in visited:
+            if pointer not in visited[temp]:
+                visited[temp].append(pointer.copy())
         else:
-            answer += 1
+            if temp != tuple(pointer):
+                visited[temp] = [pointer.copy()]
+
+    for v in visited.values():
+        answer += len(v)
 
     return answer
 
 
 if __name__ == "__main__":
-    print(solution("CBD", ["BACDE", "CBADF", "AECB", "BDA"]))
+    print(solution("ULURRDLLU"))
+    print(solution("LULLLLLLU"))
