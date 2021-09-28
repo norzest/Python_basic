@@ -1,45 +1,29 @@
-# Summer/Winter Coding(~2018) - 방문 길이
+# 2018 KAKAO BLIND RECRUITMENT - 방금그곡
 
 
-def solution(dirs):
-    answer = 0
-    # 좌표 평면의 최대 x, y 값
-    n = 5
-    # 방문한 좌표를 저장할 집합
-    visited = set()
-    # 현재 xy 값
-    x, y = 0, 0
+def solution(m, musicinfos):
+    answer = "(None)"
 
-    for d in dirs:
-        # 이동할 xy 값
-        nx, ny = x, y
-
-        if d == "U":
-            ny += 1
-        elif d == "D":
-            ny -= 1
-        elif d == "R":
-            nx += 1
-        elif d == "L":
-            nx -= 1
-
-        # 좌표를 벗어났으면 다음 문장은 실행 x
-        if nx < -n or nx > n or ny < -n or ny > n:
-            continue
-
-        # 어디서 어디로 이동했는지 집합에 추가
-        # 반대 방향도 같은 취급이므로 같이 추가
-        if (x, y, nx, ny) not in visited:
-            visited.add((x, y, nx, ny))
-            visited.add((nx, ny, x, y))
-            answer += 1
-
-        x, y = nx, ny
+    for musicInfo in musicinfos:
+        # 곡의 정보들을 , 를 구분으로 분할
+        info = musicInfo.split(",")
+        # 곡의 길이
+        n = len(info[3])
+        # 곡의 재생 시간
+        run = int(info[1][3:]) - int(info[0][3:])
+        while run < 0:
+            run += 60
+        diff = int(info[1][:2]) - int(info[0][:2])
+        if diff > 1:
+            run += 60 * (diff - 1)
+        print(info[3])
 
     return answer
 
 
 if __name__ == "__main__":
-    print(solution("ULURRDLLU"))
-    print(solution("LULLLLLLU"))
-    print(solution("DU"))
+    print(solution("ABCDEFG", ["12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF"]))
+    print(solution("CC#BCC#BCC#BCC#B", ["03:00,03:30,FOO,CC#B", "04:00,04:08,BAR,CC#BCC#BCC#B"]))
+    print(solution("ABC", ["12:00,12:14,HELLO,C#DEFGAB", "13:00,13:05,WORLD,ABCDEF"]))
+    print(solution("ABC", ["12:00,12:14,HELLO,C#DEFGAB", "13:00,13:05,WORLD,ABCDEF"]))
+    # print(solution("ABC", ["10:50,12:10,HELLO,C#DEFGAB"]))
