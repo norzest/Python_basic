@@ -1,38 +1,15 @@
-# 2018 KAKAO BLIND RECRUITMENT - 압축
+# 2018 KAKAO BLIND RECRUITMENT - 파일명 정렬
 
 
-def solution(msg):
+def solution(files):
     answer = []
-    count = 27
-    alphabet = {"A": 1, "B": 2, "C": 3, "D": 4,
-                "E": 5, "F": 6, "G": 7, "H": 8,
-                "I": 9, "J": 10, "K": 11, "L": 12,
-                "M": 13, "N": 14, "O": 15, "P": 16,
-                "Q": 17, "R": 18, "S": 19, "T": 20,
-                "U": 21, "V": 22, "W": 23, "X": 24,
-                "Y": 25, "Z": 26}
-
-    i = 0
-    msg_len = len(msg)
-    while i < msg_len:
-        temp = ''
-        for j in range(i, msg_len):
-            temp += msg[j]
-            if temp not in alphabet:
-                answer.append(alphabet[temp[:-1]])
-                i = j
-                alphabet[temp] = count
-                count += 1
-                break
-        else:
-            answer.append(alphabet[msg[i:]])
-            break
+    for file in files:
+        file = file.lower()
+        print(file)
 
     return answer
 
 
 if __name__ == "__main__":
-    print(solution("KAKAO"))
-    print(solution("TOBEORNOTTOBEORTOBEORNOT"))
-    print(solution("ABABABABABABABAB"))
-    # print(solution("THATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITIS"))
+    print(solution(["img12.png", "img10.png", "img02.png", "img1.png", "IMG01.GIF", "img2.JPG"]))
+    print(solution(["F-5 Freedom Fighter", "B-50 Superfortress", "A-10 Thunderbolt II", "F-14 Tomcat"]))
