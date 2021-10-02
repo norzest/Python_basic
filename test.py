@@ -1,26 +1,38 @@
-# 연습문제 - 가장 큰 정사각형 찾기
+# 2018 KAKAO BLIND RECRUITMENT - 압축
 
 
-def solution(board):
-    # 가장 큰 정사각형의 변의 길이
-    max_num = 0
-    x = len(board)
-    y = len(board[0])
-    if x <= 1 or y <= 1:
-        return 1
+def solution(msg):
+    answer = []
+    count = 27
+    alphabet = {"A": 1, "B": 2, "C": 3, "D": 4,
+                "E": 5, "F": 6, "G": 7, "H": 8,
+                "I": 9, "J": 10, "K": 11, "L": 12,
+                "M": 13, "N": 14, "O": 15, "P": 16,
+                "Q": 17, "R": 18, "S": 19, "T": 20,
+                "U": 21, "V": 22, "W": 23, "X": 24,
+                "Y": 25, "Z": 26}
 
-    for i in range(1, x):
-        for j in range(1, y):
-            if board[i][j] >= 1:
-                # 현재 칸의 위, 왼쪽, 왼쪽 위 중 최소값
-                min_num = min(board[i-1][j], board[i][j-1], board[i-1][j-1])
-                # min_num + 1 을 현재 칸에 대입
-                board[i][j] = min_num + 1
-                max_num = max(min_num + 1, max_num)
+    i = 0
+    msg_len = len(msg)
+    while i < msg_len:
+        temp = ''
+        for j in range(i, msg_len):
+            temp += msg[j]
+            if temp not in alphabet:
+                answer.append(alphabet[temp[:-1]])
+                i = j
+                alphabet[temp] = count
+                count += 1
+                break
+        else:
+            answer.append(alphabet[msg[i:]])
+            break
 
-    return max_num * max_num
+    return answer
 
 
 if __name__ == "__main__":
-    print(solution([[0, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [0, 0, 1, 0]]))
-    print(solution([[0, 0, 1, 1], [1, 1, 1, 1]]))
+    print(solution("KAKAO"))
+    print(solution("TOBEORNOTTOBEORTOBEORNOT"))
+    print(solution("ABABABABABABABAB"))
+    # print(solution("THATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITISTHATTHATISISTHATTHATISNOTISNOTISTHATITITIS"))
