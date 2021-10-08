@@ -1,6 +1,3 @@
-# 위클리 챌린지 - 9주차
-
-
 def make_dict(wires):
     graph = dict()
 
