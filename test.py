@@ -1,51 +1,30 @@
-# 위클리 챌린지 - 9주차
+# 2018 KAKAO BLIND RECRUITMENT - 파일명 정렬
 
 
-def make_dict(wires):
-    graph = dict()
+def solution(files):
+    answer = []
 
-    for wire in wires:
-        if wire[0] not in graph:
-            graph[wire[0]] = [wire[1]]
-        else:
-            graph[wire[0]].append(wire[1])
+    for file in files:
+        head, number, tail = '', '', ''
 
-        if wire[1] not in graph:
-            graph[wire[1]] = [wire[0]]
-        else:
-            graph[wire[1]].append(wire[0])
+        number_check = False
 
-    return graph
+        for i in range(len(file)):
+            if file[i].isdigit():
+                number += file[i]
+                number_check = True
+            elif not number_check:
+                head += file[i]
+            else:
+                tail = file[i:]
+                break
+        answer.append((head, number, tail))
 
+    answer.sort(key=lambda x: (x[0].lower(), int(x[1])))
 
-def bfs(graph, start):
-    visited = []
-    queue = [start]
-
-    while queue:
-        node = queue.pop(0)
-
-        if node not in visited:
-            visited.append(node)
-            if node in graph:
-                queue.extend(graph[node])
-
-    return visited
-
-
-def solution(n, wires):
-    min_diff = 999
-
-    for i in range(n):
-        graph = make_dict(wires[:i] + wires[i+1:])
-        num = len(bfs(graph, 1))
-        diff = max(n - num, num) - min(n - num, num)
-        min_diff = diff if diff <= min_diff else min_diff
-
-    return min_diff
+    return [''.join(a) for a in answer]
 
 
 if __name__ == "__main__":
-    print(solution(9, [[1, 3], [2, 3], [3, 4], [4, 5], [4, 6], [4, 7], [7, 8], [7, 9]]))
-    print(solution(4, [[1, 2], [2, 3], [3, 4]]))
-    print(solution(7, [[1, 2], [2, 7], [3, 7], [3, 4], [4, 5], [6, 7]]))
+    print(solution(["img12.png", "img10.png", "img02.png", "img1.png", "IMG01.GIF", "img2.JPG"]))
+    print(solution(["F-5 Freedom Fighter", "B-50 Superfortress", "A-10 Thunderbolt II", "F-14 Tomcat"]))
