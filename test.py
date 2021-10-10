@@ -1,30 +1,27 @@
-# 2018 KAKAO BLIND RECRUITMENT - 파일명 정렬
+# 2018 KAKAO BLIND RECRUITMENT - n진수 게임
 
 
-def solution(files):
-    answer = []
+def convert(n, base):
+    T = "0123456789ABCDEF"
+    q, r = divmod(n, base)
+    if q == 0:
+        return T[r]
+    else:
+        return convert(q, base) + T[r]
 
-    for file in files:
-        head, number, tail = '', '', ''
 
-        number_check = False
+def solution(n, t, m, p):
+    # 말해야 할 숫자를 담은 배열
+    arr = ''
+    num = t * m
 
-        for i in range(len(file)):
-            if file[i].isdigit():
-                number += file[i]
-                number_check = True
-            elif not number_check:
-                head += file[i]
-            else:
-                tail = file[i:]
-                break
-        answer.append((head, number, tail))
+    for i in range(num):
+        arr = ''.join([arr, str(convert(i, n))])
 
-    answer.sort(key=lambda x: (x[0].lower(), int(x[1])))
-
-    return [''.join(a) for a in answer]
+    return arr[p - 1:num:m]
 
 
 if __name__ == "__main__":
-    print(solution(["img12.png", "img10.png", "img02.png", "img1.png", "IMG01.GIF", "img2.JPG"]))
-    print(solution(["F-5 Freedom Fighter", "B-50 Superfortress", "A-10 Thunderbolt II", "F-14 Tomcat"]))
+    print(solution(2, 4, 2, 1))
+    print(solution(16, 16, 2, 1))
+    print(solution(16, 16, 2, 2))

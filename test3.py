@@ -1,4 +1,4 @@
-def floyd(n, data):
+def floyd(n, data):  # 플로이드
     dist = [[999] * n for _ in range(n)]
 
     for i, j, edge in data:
@@ -13,7 +13,7 @@ def floyd(n, data):
     return dist
 
 
-def bfs(graph, start):
+def bfs(graph, start):  # bfs
     visit = list()
     queue = [start]
 
@@ -26,7 +26,7 @@ def bfs(graph, start):
     return visit
 
 
-def dfs(graph, start):
+def dfs(graph, start):  # dfs
     visit = list()
     stack = [start]
 
@@ -37,6 +37,15 @@ def dfs(graph, start):
             stack.extend(graph[node])
 
     return visit
+
+
+def convert(n, base):  # n진법 변환
+    T = "0123456789ABCDEF"
+    q, r = divmod(n, base)
+    if q == 0:
+        return T[r]
+    else:
+        return convert(q, base) + T[r]
 
 
 g = {
@@ -60,3 +69,4 @@ d = [[1, 3, -2], [2, 1, 4], [2, 3, 3], [3, 4, 2], [4, 2, -1]]
 print(bfs(g, 'A'))
 print(dfs(g, 'A'))
 print(floyd(4, d))
+print(convert(7, 3))
