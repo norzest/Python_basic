@@ -2,11 +2,14 @@
 
 
 def solution(weights, head2head):
-    answer = []
     p = len(weights)
     total = []
 
     for i in range(p):
+        w_count = head2head[i].count('W')
+        total_count = w_count + head2head[i].count('L')
+        # 승률
+        win_rate = w_count/total_count if total_count != 0 else 0
         # 자신보다 몸무게가 많은 선수를 이긴 횟수
         big_win = 0
         for j in range(p):
@@ -14,15 +17,12 @@ def solution(weights, head2head):
                 big_win += 1
 
         # 번호, 체중, h2h, big_win
-        total.append((i + 1, weights[i],
-                      head2head[i].count('W'), big_win))
+        total.append((i + 1, weights[i], win_rate, big_win))
 
     # 1순위 승률, 2순위 체급차 승리, 3순위 몸무게 정렬
     total.sort(key=lambda x: (x[2], x[3], x[1]), reverse=True)
 
-    for t in total:
-        answer.append(t[0])
-    return answer
+    return [t[0] for t in total]
 
 
 if __name__ == "__main__":
