@@ -1,15 +1,8 @@
-# 2018 KAKAO BLIND RECRUITMENT - 파일명 정렬
+def quadratic(a,b,c):
+    D = ((b**2)-4*a*c)**0.5
+    x = (-b + D) / 2*a
+    y = (-b - D) / 2*a
+    print('X1:{}, X2:{}'.format(x,y))
 
 
-def solution(files):
-    answer = []
-    for file in files:
-        file = file.lower()
-        print(file)
-
-    return answer
-
-
-if __name__ == "__main__":
-    print(solution(["img12.png", "img10.png", "img02.png", "img1.png", "IMG01.GIF", "img2.JPG"]))
-    print(solution(["F-5 Freedom Fighter", "B-50 Superfortress", "A-10 Thunderbolt II", "F-14 Tomcat"]))
+quadratic(4, 0, 0)
