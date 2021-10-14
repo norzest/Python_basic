@@ -1,13 +1,18 @@
-# 연습문제 - 땅따먹기
+# 월간 코드 챌린지 시즌3 - n^2 배열 자르기
 
 
-def solution(land):
-    for i in range(1, len(land)):
-        for j in range(len(land[0])):
-            land[i][j] += max(land[i-1][:j] + land[i-1][j+1:])
+def solution(n, left, right):
+    answer = []
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if j >= i:
+                answer.append(j)
+            else:
+                answer.append(i)
 
-    return max(land[len(land)-1])
+    return answer[left:right+1]
 
 
 if __name__ == "__main__":
-    print(solution(	[[1, 2, 3, 5], [5, 6, 7, 8], [4, 3, 2, 1]]))
+    print(solution(3, 2, 5))
+    print(solution(4, 7, 14))
