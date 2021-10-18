@@ -1,44 +1,53 @@
-# 2018 KAKAO BLIND RECRUITMENT - 추석 트래픽
+# 2021 Dev Matching: 웹 백엔드 개발자 - 다단계 칫솔 판매
 
 
-def solution(lines):
-    def get_end_time(time):
-        h = int(time[:2]) * 3600  # 시간
-        m = int(time[3:5]) * 60  # 분
-        s = int(time[6:8])  # 초
-        ms = int(time[9:])  # 밀리 초
-        return (h + m + s) * 1000 + ms  # 시간을 밀리초 기준으로 변환
+def solution(enroll, referral, seller, amount):
+    def bfs(graph, start, money):
+        visited = []
+        income = []
+        queue = [start]
 
-    def get_start_time(time, t):
-        return time - int(float(t) * 1000) + 1
+        while queue:
+            node = queue.pop(0)
+            if node not in visited:
+                visited.append(node)
 
-    start = []  # 시작 시간 리스트
-    end = []  # 끝나는 시간 리스트
+                if node in graph:
+                    temp = money // 10 if money // 10 >= 1 else 0  # 추천인이 받을 수입
+                    # 10%를 계산한 금액이 1원 미만이면 이득 분배 X
+                    income.append(money - temp)
+                    money = money // 10
+                    if money == 0:
+                        break
+                    queue.extend(graph[node])
 
-    for line in lines:
-        temp_split = line.split(' ')
-        end.append(get_end_time(temp_split[1]))
-        start.append(get_start_time(end[-1], temp_split[2][:-1]))
+        return list(zip(visited, income))
 
-    answer = 0
-    lines_len = len(lines)
-    for i in range(lines_len):
-        count = 0
-        cur_time = end[i]
-        for j in range(i, lines_len):
-            # 1초 안지났으면 +1
-            if cur_time > start[j] - 1000:
-                count += 1
+    # 조직도 생성
+    group = dict()
+    for e, r in zip(enroll, referral):
+        if e not in group.keys():
+            group[e] = [r]
+        else:
+            group[e].extend([r])
 
-        answer = max(answer, count)
+    # 조직원 별 수입 딕셔너리 생성
+    group_income = dict()
+    for s, a in zip(seller, amount):
+        br = bfs(group, s, a * 100)
 
+        for r in br:
+            if r[0] not in group_income.keys():
+                group_income[r[0]] = r[1]
+            else:
+                group_income[r[0]] += r[1]
+
+    answer = [0 for _ in enroll]
+    for g in group_income:
+        answer[enroll.index(g)] += group_income[g]
     return answer
 
 
 if __name__ == "__main__":
-    print(solution(["2016-09-15 00:00:00.000 3s"]))
-    print(solution(["2016-09-15 23:59:59.999 0.001s"]))
-    print(solution(["2016-09-15 01:00:04.001 2.0s", "2016-09-15 01:00:07.000 2s"]))
-    print(solution(["2016-09-15 01:00:04.002 2.0s", "2016-09-15 01:00:07.000 2s"]))
-    print(solution(["2016-09-15 20:59:57.421 0.351s", "2016-09-15 20:59:58.233 1.181s", "2016-09-15 20:59:58.299 0.8s", "2016-09-15 20:59:58.688 1.041s", "2016-09-15 20:59:59.591 1.412s", "2016-09-15 21:00:00.464 1.466s", "2016-09-15 21:00:00.741 1.581s", "2016-09-15 21:00:00.748 2.31s", "2016-09-15 21:00:00.966 0.381s", "2016-09-15 21:00:02.066 2.62s"]))
-    print(solution(["2016-09-15 00:00:00.000 2.3s", "2016-09-15 23:59:59.999 0.1s"]))
+    print(solution(["john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young"], ["-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward"], ["young", "john", "tod", "emily", "mary"], [12, 4, 2, 5, 10]))
+    print(solution(["john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young"], ["-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward"], ["sam", "emily", "jaimie", "edward"], [2, 3, 5, 4]))
