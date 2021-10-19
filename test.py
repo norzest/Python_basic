@@ -1,53 +1,32 @@
-# 2021 Dev Matching: 웹 백엔드 개발자 - 다단계 칫솔 판매
+# 2020 KAKAO BLIND RECRUITMENT - 자물쇠와 열쇠
 
 
-def solution(enroll, referral, seller, amount):
-    def bfs(graph, start, money):
-        visited = []
-        income = []
-        queue = [start]
+def solution(key, lock):
+    def check(l):  # 키가 맞는지 확인
+        n = len(l) // 3
 
-        while queue:
-            node = queue.pop(0)
-            if node not in visited:
-                visited.append(node)
+        for i in range(n, n * 2):
+            for j in range(n, n * 2):
+                if l[i][j] != 1:
+                    return False
+        return True
 
-                if node in graph:
-                    temp = money // 10 if money // 10 >= 1 else 0  # 추천인이 받을 수입
-                    # 10%를 계산한 금액이 1원 미만이면 이득 분배 X
-                    income.append(money - temp)
-                    money = money // 10
-                    if money == 0:
-                        break
-                    queue.extend(graph[node])
+    # 자물쇠 확장
+    lock_len = len(lock)
+    ex_lock = [[0] * (lock_len * 3) for _ in range(lock_len * 3)]
+    for i in range(lock_len):
+        for j in range(lock_len):
+            ex_lock[i + lock_len][j + lock_len] = lock[i][j]
 
-        return list(zip(visited, income))
+    for k in key:
+        print(k)
+    print('---')
+    for l in ex_lock:
+        print(l)
 
-    # 조직도 생성
-    group = dict()
-    for e, r in zip(enroll, referral):
-        if e not in group.keys():
-            group[e] = [r]
-        else:
-            group[e].extend([r])
-
-    # 조직원 별 수입 딕셔너리 생성
-    group_income = dict()
-    for s, a in zip(seller, amount):
-        br = bfs(group, s, a * 100)
-
-        for r in br:
-            if r[0] not in group_income.keys():
-                group_income[r[0]] = r[1]
-            else:
-                group_income[r[0]] += r[1]
-
-    answer = [0 for _ in enroll]
-    for g in group_income:
-        answer[enroll.index(g)] += group_income[g]
+    answer = check(ex_lock)
     return answer
 
 
 if __name__ == "__main__":
-    print(solution(["john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young"], ["-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward"], ["young", "john", "tod", "emily", "mary"], [12, 4, 2, 5, 10]))
-    print(solution(["john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young"], ["-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward"], ["sam", "emily", "jaimie", "edward"], [2, 3, 5, 4]))
+    print(solution(	[[0, 0, 0], [1, 0, 0], [0, 1, 1]], [[1, 1, 1], [1, 1, 0], [1, 0, 1]]))
