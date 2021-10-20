@@ -1,32 +1,48 @@
 # 2020 KAKAO BLIND RECRUITMENT - 자물쇠와 열쇠
 
 
-def solution(key, lock):
-    def check(l):  # 키가 맞는지 확인
-        n = len(l) // 3
+def rotation(key, key_len):  # key 90도 회전
+    temp = [[0] * key_len for _ in range(key_len)]
+    for i in range(key_len):
+        for j in range(key_len):
+            temp[j][key_len-1-i] = key[i][j]
+    return temp
 
-        for i in range(n, n * 2):
-            for j in range(n, n * 2):
-                if l[i][j] != 1:
-                    return False
-        return True
+
+def match(key, lock, lock_len):  # 자물쇠와 키 매칭
+    count = 0
+
+    for i in range(lock_len, lock_len * 2):
+        for j in range(lock_len, lock_len * 2):
+            print(lock[i][j], end='')
+        print()
+
+    print('-----')
+    return False
+
+
+def solution(key, lock):
+    answer = False
+    key_len = len(key)
+    lock_len = len(lock)
 
     # 자물쇠 확장
-    lock_len = len(lock)
     ex_lock = [[0] * (lock_len * 3) for _ in range(lock_len * 3)]
     for i in range(lock_len):
         for j in range(lock_len):
             ex_lock[i + lock_len][j + lock_len] = lock[i][j]
 
-    for k in key:
-        print(k)
-    print('---')
-    for l in ex_lock:
-        print(l)
+    cnt = 0
+    while cnt < 4:
+        key = rotation(key, key_len)
+        answer = match(key, ex_lock, lock_len)
+        if answer:
+            break
+        cnt += 1
 
-    answer = check(ex_lock)
     return answer
 
 
 if __name__ == "__main__":
     print(solution(	[[0, 0, 0], [1, 0, 0], [0, 1, 1]], [[1, 1, 1], [1, 1, 0], [1, 0, 1]]))
+    print(solution(	[[0, 0, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0], [0, 1, 0, 1]], [[1, 1, 1, 0], [1, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 0]]))
