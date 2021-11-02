@@ -14,12 +14,11 @@ def match(key, lock, lock_len):  # 자물쇠와 키 매칭
 
     for i in range(lock_len, lock_len * 2):
         for j in range(lock_len, lock_len * 2):
-            print(lock[i][j] + key[i - lock_len][j - lock_len], end="")
-            if lock[i][j] + key[i - lock_len][j - lock_len] == 1:
-                count += 1
+            print(lock[i][j], end='')
         print()
-    print(count)
-    return count == lock_len * lock_len
+
+    print('-----')
+    return False
 
 
 def solution(key, lock):
