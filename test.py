@@ -1,15 +1,19 @@
-# 연습문제 - 가장 긴 팰린드롬
+# 연습문제 - 멀리 뛰기
 
 
-def solution(s):
-    answer = len(s)
+def solution(n):
+    if n <= 3:
+        return n
 
-    for i in range(answer):
-        answer -= 1
+    arr = [1, 2, 3]
 
-    return answer
+    for i in range(3, n):
+        arr.append(arr[i-2] + arr[i-1])
+    print(arr)
+    return arr[-1] % 1234567
 
 
 if __name__ == "__main__":
-    print(solution("abcdcba"))
-    print(solution("abacde"))
+    print(solution(4))
+    print(solution(3))
+
