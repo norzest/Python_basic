@@ -1,35 +1,25 @@
-# 연습문제 - 야근지수
-
-import heapq
+# 연습문제 - 최고의 집합
 
 
-def solution(n, works):
-    answer = 0
+def solution(n, s):
+    if s < n:
+        return [-1]
 
-    # 최대 힙 생성
-    heap = []
-    for work in works:
-        heapq.heappush(heap, (-work, work))
+    a = s // n
+    b = s % n
 
-    # n 번 만큼 반복
-    while n > 0:
-        if not heap:
-            break
+    answer = []
+    for i in range(n):
+        if b != 0:
+            answer.append(a + 1)
+            b -= 1
+        else:
+            answer.append(a)
 
-        # 최대값을 pop
-        temp = heapq.heappop(heap)[1] - 1
-        # 최대값이 1 이상이였으면 최대값 - 1 을 push
-        if temp >= 1:
-            heapq.heappush(heap, (-temp, temp))
-
-        n -= 1
-
-    for h in heap:
-        answer += h[1] * h[1]
-    return answer
+    return answer[::-1]
 
 
 if __name__ == "__main__":
-    print(solution(4, [4, 3, 3]))
-    print(solution(1, [2, 1, 2]))
-    print(solution(3, [1, 1]))
+    print(solution(2, 9))
+    print(solution(4, 7))
+    print(solution(2, 8))
