@@ -1,25 +1,24 @@
-# 연습문제 - 최고의 집합
+# 연습문제 - 하노이의 탑
 
 
-def solution(n, s):
-    if s < n:
-        return [-1]
+answer = []
 
-    a = s // n
-    b = s % n
 
-    answer = []
-    for i in range(n):
-        if b != 0:
-            answer.append(a + 1)
-            b -= 1
-        else:
-            answer.append(a)
+def hanoi(n, start, end, other):
+    if n == 1:
+        answer.append([start, end])
+        return
 
-    return answer[::-1]
+    hanoi(n - 1, start, other, end)  # 1, 2, 3
+    answer.append([start, end])  # [1, 3]
+    hanoi(n - 1, other, end, start)  # 3, 2, 1
+
+
+def solution(n):
+    hanoi(n, 1, 3, 2)
+    return answer
 
 
 if __name__ == "__main__":
-    print(solution(2, 9))
-    print(solution(4, 7))
-    print(solution(2, 8))
+    print(solution(2))
+    print(solution(3))
