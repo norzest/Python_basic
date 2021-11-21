@@ -1,24 +1,35 @@
-# 연습문제 - 하노이의 탑
+# 연습문제 - N-Queen
 
 
-answer = []
+def dfs(queen, n, row):
+    count = 0
 
+    if n == row:
+        return 1
 
-def hanoi(n, start, end, other):
-    if n == 1:
-        answer.append([start, end])
-        return
+    # 가로로 한번만 진행
+    for col in range(n):
+        queen[row] = col
 
-    hanoi(n - 1, start, other, end)  # 1, 2, 3
-    answer.append([start, end])  # [1, 3]
-    hanoi(n - 1, other, end, start)  # 3, 2, 1
+        for x in range(row):
+            # 세로로 겹치면 안됨
+            if queen[x] == queen[row]:
+                break
+
+            # 대각선으로 겹치면 안됨
+            if abs(queen[x] - queen[row]) == (row - x):
+                break
+        else:
+            count += dfs(queen, n, row + 1)
+
+    return count
 
 
 def solution(n):
-    hanoi(n, 1, 3, 2)
-    return answer
+    queen = [0] * n
+
+    return dfs(queen, n, 0)
 
 
 if __name__ == "__main__":
-    print(solution(2))
-    print(solution(3))
+    print(solution(4))
