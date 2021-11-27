@@ -2,13 +2,15 @@
 
 
 def solution(n):
-    if n <= 3:
-        return n
-    arr = [1, 2, 3]
+    a = 1
+    b = 2
+    answer = a + b
     for i in range(3, n):
-        arr.append(arr[i-2] + arr[i-1])
+        a = b
+        b = answer
+        answer = a + b
 
-    return arr[-1] % 1000000007
+    return answer % 1000000007
 
 
 if __name__ == "__main__":
