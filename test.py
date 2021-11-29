@@ -1,17 +1,15 @@
-# 연습문제 - 2 x n 타일링
+# 2018 KAKAO BLIND RECRUITMENT - 셔틀버스
 
 
-def solution(n):
-    a = 1
-    b = 2
-    answer = a + b
-    for i in range(3, n):
-        a = b
-        b = answer
-        answer = a + b
-
-    return answer % 1000000007
+def solution(n, t, m, timetable):
+    answer = ''
+    return answer
 
 
 if __name__ == "__main__":
-    print(solution(4))
+    print(solution(1, 1, 5, ["08:00", "08:01", "08:02", "08:03"]))
+    print(solution(2, 10, 2, ["09:10", "09:09", "08:00"]))
+    print(solution(2, 1, 2, ["09:00", "09:00", "09:00", "09:00"]))
+    print(solution(1, 1, 5, ["00:01", "00:01", "00:01", "00:01", "00:01"]))
+    print(solution(1, 1, 1, ["23:59"]))
+    print(solution(10, 60, 45, ["23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59", "23:59"]))
