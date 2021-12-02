@@ -2,8 +2,27 @@
 
 
 def solution(n, t, m, timetable):
-    answer = ''
+    time = 540  # 9시는 60분 * 9 이므로 540
 
+    # 위와 같이 변환
+    timetable.sort()
+    for i in range(len(timetable)):
+        temp = list(map(int, timetable[i].split(":")))
+        timetable[i] = temp[0] * 60 + temp[1]
+
+    print(timetable)
+
+    bus = []
+
+    for i in range(n):
+        while len(bus) <= m and timetable:
+            temp = timetable.pop(0)
+
+            if temp <= time:
+                bus.append(temp)
+        print(bus)
+
+    answer = ''
     return answer
 
 
