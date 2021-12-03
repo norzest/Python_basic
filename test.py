@@ -11,15 +11,20 @@ def solution(n, t, m, timetable):
         timetable[i] = temp[0] * 60 + temp[1]
 
     print(timetable)
-
-    bus = []
-
+    print('--')
     for i in range(n):
-        while len(bus) <= m and timetable:
-            temp = timetable.pop(0)
+        bus = []
 
-            if temp <= time:
-                bus.append(temp)
+        while len(bus) < m and timetable:
+            if timetable[0] <= time:
+                bus.append(timetable.pop(0))
+            else:
+                break
+
+        if timetable:
+            while timetable[0] >= time:
+                time += t
+
         print(bus)
 
     answer = ''
