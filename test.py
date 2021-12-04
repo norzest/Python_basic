@@ -27,6 +27,7 @@ def solution(n, t, m, timetable):
 
         print(bus)
 
+
     answer = ''
     return answer
 
