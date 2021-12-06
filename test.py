@@ -12,6 +12,8 @@ def solution(n, t, m, timetable):
 
     print(timetable)
     print('--')
+
+    answer = 540
     for i in range(n):
         bus = []
 
@@ -27,9 +29,10 @@ def solution(n, t, m, timetable):
 
         print(bus)
 
+        if bus and len(bus) < m and bus[-1] >= 540:
+            answer = bus[-1]
 
-    answer = ''
-    return answer
+    return ''.join([str(answer//60).zfill(2), ':', str(answer % 60).zfill(2)])
 
 
 if __name__ == "__main__":
