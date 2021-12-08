@@ -2,7 +2,8 @@
 
 
 def solution(n, t, m, timetable):
-    time = 540  # 9시는 60분 * 9 이므로 540
+    # 9시는 60분 * 9 이므로 540
+    bus_time = [540 + (_ * t) for _ in range(n)]
 
     # 위와 같이 변환
     timetable.sort()
@@ -10,27 +11,12 @@ def solution(n, t, m, timetable):
         temp = list(map(int, timetable[i].split(":")))
         timetable[i] = temp[0] * 60 + temp[1]
 
-    print(timetable)
-    print('--')
+    num = 0
+    while num < len(bus_time):
+        bus = []
+        num += 1
 
     answer = 540
-    for i in range(n):
-        bus = []
-
-        while len(bus) < m and timetable:
-            if timetable[0] <= time:
-                bus.append(timetable.pop(0))
-            else:
-                break
-
-        if timetable:
-            while timetable[0] >= time:
-                time += t
-
-        print(bus)
-
-        if bus and len(bus) < m and bus[-1] >= 540:
-            answer = bus[-1]
 
     return ''.join([str(answer//60).zfill(2), ':', str(answer % 60).zfill(2)])
 
