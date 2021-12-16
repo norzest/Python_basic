@@ -7,7 +7,7 @@ def solution(n, t, m, timetable):
     bus_time = [540 + (_ * t) for _ in range(n)]
 
     # 위와 같이 변환
-    timetable.sort()
+    timetable.sort(reverse=True)
     for i in range(len(timetable)):
         temp = list(map(int, timetable[i].split(":")))
         timetable[i] = temp[0] * 60 + temp[1]
