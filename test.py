@@ -12,6 +12,8 @@ def solution(n, k, cmd):
         elif c[0] == 'D':
             k += int(c[2])
         elif c[0] == 'C':
+            temp = []
+            deleted.append(temp)
             print(arr)
         elif c[0] == 'Z':
             print(arr)
