@@ -1,9 +1,12 @@
-# 1234 제목
+# 2231 분해합
 
-n = range(int(input()))
+n = int(input())
+c = 0
+for i in range(n):
+    temp = [int(j) for j in str(i)]
 
-for i in n:
-    ip = list(map(int, input().split()))
-    h = ip[2] % ip[0]
-    w = ip[2] // ip[0] + 1
-    print(h * 100, w)
+    if i + sum(temp) == n:
+        c = i
+        break
+
+print(c)
