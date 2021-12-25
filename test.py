@@ -1,13 +1,12 @@
-# 2231 분해합
+# 2775 부녀회장이 될테야
 
-n = int(input())
-m = 1
-cnt = 1
-while True:
-    if n <= m:
-        print(cnt)
-        break
-    else:
-        m = m + (6 * cnt)
-        cnt += 1
+for t in range(int(input())):
+    k = int(input())
+    n = int(input())
 
+    arr = [i+1 for i in range(n)]  # 0층
+
+    for i in range(k):
+        arr = [sum(arr[:j+1]) for j in range(n)]
+
+    print(arr[-1])
