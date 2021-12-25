@@ -1,12 +1,13 @@
 # 2231 분해합
 
 n = int(input())
-c = 0
-for i in range(n):
-    temp = [int(j) for j in str(i)]
-
-    if i + sum(temp) == n:
-        c = i
+m = 1
+cnt = 1
+while True:
+    if n <= m:
+        print(cnt)
         break
+    else:
+        m = m + (6 * cnt)
+        cnt += 1
 
-print(c)
