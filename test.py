@@ -1,13 +1,12 @@
-# 15829 Hashing
+# 1259 팰린드롬수
 
-r = 31
-M = 1234567891
+while True:
+    ip = input()
 
-L = range(int(input()))
-S = input()
+    if ip == '0':
+        break
 
-answer = 0
-for i in L:
-    answer += (ord(S[i]) - 96) * (r ** i)
-
-print(answer % M)
+    if ip == ip[::-1]:
+        print('yes')
+    else:
+        print('no')

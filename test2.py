@@ -1,2 +1,4 @@
-print(ord('a') - 96)
-print(ord('b') - 96)
+a = '123'
+
+print(a)
+print(a[::-1])
