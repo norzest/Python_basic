@@ -1,21 +1,15 @@
-# 2839 설탕 배달
+# 2869 달팽이는 올라가고 싶다
 
 import sys
 
 
 def solution():
-    N = int(sys.stdin.readline())
+    a, b, v = map(int, sys.stdin.readline().split(" "))
 
-    cnt = 0
-    while N >= 0:
-        if N % 5 == 0:
-            cnt += (N // 5)
-            print(cnt)
-            break
-        N -= 3
-        cnt += 1
+    if (v - b) % (a - b) == 0:
+        print((v - b) // (a - b))
     else:
-        print(-1)
+        print((v - b) // (a - b) + 1)
 
 
 if __name__ == '__main__':
