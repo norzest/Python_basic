@@ -1,18 +1,16 @@
-# 11050 이항 계수 1
+# 1018 체스판 다시 칠하기
 
 import sys
 
 
-def factorial(n):
-    if n <= 1:
-        return 1
-    else:
-        return n * factorial(n-1)
-
-
 def solution():
-    n, k = map(int, sys.stdin.readline().split(" "))
-    print(factorial(n) // (factorial(k) * factorial(n-k)))
+    n, m = map(int, sys.stdin.readline().split(" "))
+
+    first = sys.stdin.readline()
+    fixed = []
+    ip = []
+    for i in range(n-1):
+        ip.append(sys.stdin.readline())
 
 
 if __name__ == '__main__':
