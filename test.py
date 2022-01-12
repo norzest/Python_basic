@@ -1,37 +1,45 @@
-# 10845 큐
+# 10866 덱
 
 import sys
+from collections import deque
 
 
 def solution():
     n = int(sys.stdin.readline())
-    queue = []
+    deq = deque()
     for i in range(n):
         order = sys.stdin.readline().split()
-        if order[0] == 'push':
-            queue.append(order[1])
-        elif order[0] == 'pop':
-            if not queue:
+        if order[0] == 'push_front':
+            deq.appendleft(order[1])
+        elif order[0] == 'push_back':
+            deq.append(order[1])
+        elif order[0] == 'pop_front':
+            if not deq:
                 print(-1)
             else:
-                print(queue.pop(0))
+                print(deq.popleft())
+        elif order[0] == 'pop_back':
+            if not deq:
+                print(-1)
+            else:
+                print(deq.pop())
         elif order[0] == 'size':
-            print(len(queue))
+            print(len(deq))
         elif order[0] == 'empty':
-            if not queue:
+            if not deq:
                 print(1)
             else:
                 print(0)
         elif order[0] == 'front':
-            if not queue:
+            if not deq:
                 print(-1)
             else:
-                print(queue[0])
+                print(deq[0])
         elif order[0] == 'back':
-            if not queue:
+            if not deq:
                 print(-1)
             else:
-                print(queue[-1])
+                print(deq[-1])
 
 
 if __name__ == '__main__':
