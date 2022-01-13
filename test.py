@@ -1,45 +1,27 @@
-# 10866 덱
-
-import sys
-from collections import deque
+# 11866 요세푸스 문제 0
 
 
 def solution():
-    n = int(sys.stdin.readline())
-    deq = deque()
-    for i in range(n):
-        order = sys.stdin.readline().split()
-        if order[0] == 'push_front':
-            deq.appendleft(order[1])
-        elif order[0] == 'push_back':
-            deq.append(order[1])
-        elif order[0] == 'pop_front':
-            if not deq:
-                print(-1)
-            else:
-                print(deq.popleft())
-        elif order[0] == 'pop_back':
-            if not deq:
-                print(-1)
-            else:
-                print(deq.pop())
-        elif order[0] == 'size':
-            print(len(deq))
-        elif order[0] == 'empty':
-            if not deq:
-                print(1)
-            else:
-                print(0)
-        elif order[0] == 'front':
-            if not deq:
-                print(-1)
-            else:
-                print(deq[0])
-        elif order[0] == 'back':
-            if not deq:
-                print(-1)
-            else:
-                print(deq[-1])
+    n, k = map(int, input().split())
+    arr = [i for i in range(1, n + 1)]
+    answer = []
+    num = k
+
+    while arr:
+        if num <= len(arr):
+            del arr[num-1]
+            answer.append(num)
+            num += k
+            if num > n:
+                num -= n
+        else:
+            num += k
+            if num > n:
+                num -= n
+
+        print(arr)
+        print(answer)
+        print('--')
 
 
 if __name__ == '__main__':
