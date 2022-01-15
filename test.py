@@ -1,16 +1,15 @@
 # 1654 랜선 자르기
 
-import sys
+from sys import stdin
 
 
 def solution():
-    k, n = map(int, sys.stdin.readline().split())
-    line = []
-    for i in range(k):
-        line.append(int(sys.stdin.readline()))
+    k, n = map(int, stdin.readline().split())
+    line = list(map(int, stdin.readlines()))
 
+    answer = 0
     start = 1
-    end = max(line)
+    end = sum(line) // n
 
     while start <= end:
         mid = (start + end) // 2
@@ -21,8 +20,9 @@ def solution():
             end = mid - 1
         else:
             start = mid + 1
+            answer = mid
 
-    print(end)
+    print(answer)
 
 
 if __name__ == '__main__':
