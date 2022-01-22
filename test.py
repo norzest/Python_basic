@@ -5,17 +5,26 @@ from sys import stdin
 
 def solution():
     n, m, b = map(int, stdin.readline().split())
-    height = dict()
-    for i in range(n):
-        for j in list(map(int, stdin.readline().split())):
-            if j not in height.keys():
-                height[j] = 1
-            else:
-                height[j] += 1
+    height = [list(map(int, stdin.readline().split())) for _ in range(n)]
 
-    print(height)
+    answer = [99999999999999999999, 0]
+    for i in range(257):
+        remove_block = 0
+        add_block = 0
+        for j in range(n):
+            for k in range(m):
+                if height[j][k] < i:
+                    add_block += i - height[j][k]
+                else:
+                    remove_block += height[j][k] - i
 
+        if remove_block + b >= add_block:
+            time = 2 * remove_block + add_block
+            if answer[0] >= time:
+                answer[0] = time
+                answer[1] = i
 
+    print(answer[0], answer[1])
 
 
 if __name__ == '__main__':
