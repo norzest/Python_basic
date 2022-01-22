@@ -1,21 +1,21 @@
-# 1929 소수 구하기
+# 18111 마인크래프트
 
 from sys import stdin
 
 
 def solution():
-    m, n = map(int, stdin.readline().split())
-    n += 1
-    arr = [True] * n
+    n, m, b = map(int, stdin.readline().split())
+    height = dict()
+    for i in range(n):
+        for j in list(map(int, stdin.readline().split())):
+            if j not in height.keys():
+                height[j] = 1
+            else:
+                height[j] += 1
 
-    for i in range(2, int(n ** 0.5) + 1):
-        if arr[i]:
-            for j in range(i + i, n, i):
-                arr[j] = False
+    print(height)
 
-    for i in range(m, n):
-        if arr[i] and i > 1:
-            print(i)
+
 
 
 if __name__ == '__main__':
