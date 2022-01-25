@@ -1,4 +1,6 @@
-a = [3, 1, 2]
+a = set()
+b = set([])
+a.add(1)
+a.add(1)
 
-a.remove(2)
-print(a)
+print(a, b)
