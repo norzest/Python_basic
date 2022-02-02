@@ -1,4 +1,4 @@
-# 1764 듣보잡
+# 17219 비밀번호 찾기
 
 from sys import stdin
 
@@ -6,21 +6,15 @@ from sys import stdin
 def solution():
     sr = stdin.readline
     n, m = map(int, sr().split(" "))
-    dd = set()
-    for i in range(n):
-        dd.add(sr().rstrip())
+    d = dict()
 
-    cnt = 0
-    bd = set()
-    for i in range(m):
-        temp = sr().rstrip()
-        if temp in dd:
-            bd.add(temp)
-            cnt += 1
+    for _ in range(n):
+        site, pwd = sr().split(" ")
+        d[site] = pwd.rstrip()
 
-    print(cnt)
-    for b in sorted(bd):
-        print(b)
+    for _ in range(m):
+        site = sr().rstrip()
+        print(d[site])
 
 
 if __name__ == '__main__':
